@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Metis Energy × Aptics — Gunsynd Solar Farm</title>
+<meta name="description" content="Independent thermal baseline and under-panel inspection for Gunsynd Solar Farm — 94 MW at Goondiwindi, while the defects liability period is still open.">
+<style>
+:root{
+  --ink:#0c1110; --paper:#fafaf9; --white:#ffffff;
+  --mute:#6e7a77; --faint:#9aa5a2; --hair:#e6e9e8;
+  --teal:#0fa88f; --teal-deep:#0a7a68;
+  --dark:#0c1110; --dark2:#101716; --dark-mute:#8b9793; --dark-hair:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;background:var(--paper);color:var(--ink);
+     -webkit-font-smoothing:antialiased;line-height:1.55}
+.hidden{display:none!important}
+.wrap{max-width:1120px;margin:0 auto;padding:0 40px}
+section{padding:108px 0}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:26px}
+h1,h2{letter-spacing:-.026em;font-weight:600;line-height:1.08}
+h2{font-size:clamp(30px,3.6vw,46px);max-width:840px}
+h2 .q{display:block;color:var(--teal-deep)}
+.dark h2 .q{color:var(--teal)}
+.lede{font-size:clamp(18px,2vw,22px);color:var(--mute);font-weight:420;letter-spacing:-.01em;max-width:700px;margin-top:26px}
+.dark{background:var(--dark);color:#f4f6f5}
+.dark .lede{color:var(--dark-mute)}
+.dark h2{color:#f4f6f5}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+/* gate */
+#gate{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(1200px 600px at 78% -10%,rgba(15,168,143,.14),transparent 60%),var(--dark)}
+.gatecard{width:min(400px,92vw);text-align:left;color:#f4f6f5}
+.gatecard .gm{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--dark-mute);margin-bottom:34px}
+.gatecard h3{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.gatecard p{margin-top:12px;font-size:14.5px;color:var(--dark-mute)}
+.gatecard label{display:block;margin:26px 0 8px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dark-mute)}
+.gatecard input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--dark-hair);
+                background:rgba(255,255,255,.04);color:#f4f6f5;font-size:15px;outline:none}
+.gatecard input:focus{border-color:var(--teal)}
+.gatecard button{width:100%;margin-top:26px;padding:15px;border:0;border-radius:999px;cursor:pointer;
+                 background:var(--teal);color:#04211c;font-weight:640;font-size:15px}
+.gatemsg{margin-top:14px;font-size:13px;min-height:18px;color:#f87171}
+
+/* nav */
+#nav{position:fixed;top:0;left:0;right:0;z-index:40;padding:16px 0;opacity:0;pointer-events:none;
+     transition:opacity .35s ease;background:rgba(12,17,16,.86);backdrop-filter:blur(10px);
+     border-bottom:1px solid var(--dark-hair)}
+#nav.on{opacity:1;pointer-events:auto}
+#nav .wrap{display:flex;justify-content:space-between;align-items:center}
+#nav b{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#f4f6f5;font-weight:600}
+#nav a{font-size:13px;color:var(--teal);text-decoration:none;font-weight:560}
+
+/* hero */
+.hero{background:radial-gradient(1100px 640px at 78% -14%,rgba(15,168,143,.16),transparent 62%),var(--dark);
+      color:#f4f6f5;padding:126px 0 0}
+.hero .mark{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--dark-mute);margin-bottom:44px}
+.hero h1{font-size:clamp(42px,6.2vw,88px)}
+.hero h1 .turn{display:block;color:var(--teal);margin-top:.1em}
+.hero .sub{margin-top:34px;font-size:19px;color:var(--dark-mute);max-width:620px;font-weight:420;padding-bottom:90px}
+
+.band{border-top:1px solid var(--dark-hair);background:var(--dark2);display:grid;grid-template-columns:repeat(5,1fr)}
+.band .cell{padding:40px 16px 36px;text-align:center;border-right:1px solid var(--dark-hair)}
+.band .cell:last-child{border-right:none}
+.band .v{font-size:clamp(20px,2.5vw,31px);font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.band .lbl{margin-top:8px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dark-mute);line-height:1.5}
+
+/* numbered rows */
+.rows{margin-top:66px;border-top:1px solid var(--hair)}
+.rowitem{display:grid;grid-template-columns:74px 1fr 1.14fr;gap:34px;align-items:baseline;
+         padding:42px 0;border-bottom:1px solid var(--hair)}
+.rowitem .no{font-size:14px;color:var(--faint);font-variant-numeric:tabular-nums;font-weight:600}
+.rowitem h3{font-size:20px;font-weight:600;letter-spacing:-.015em}
+.rowitem p{font-size:16.5px;color:var(--mute)}
+.rowitem p b{color:var(--ink);font-weight:600}
+.dark .rows,.dark .rowitem{border-color:var(--dark-hair)}
+.dark .rowitem p{color:var(--dark-mute)}
+.dark .rowitem p b{color:#f4f6f5}
+
+.pull{margin-top:58px;font-size:clamp(21px,2.5vw,30px);font-weight:500;letter-spacing:-.02em;max-width:880px;line-height:1.3}
+.pull em{color:var(--teal-deep);font-style:normal}
+.dark .pull em{color:var(--teal)}
+
+/* figures */
+.figgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:62px}
+.figgrid figure{background:var(--dark2);border:1px solid var(--dark-hair);border-radius:14px;overflow:hidden}
+.figgrid img{display:block;width:100%;height:320px;object-fit:cover;background:#16201e}
+.figgrid figcaption{padding:18px 22px 20px;font-size:14px;color:var(--dark-mute);line-height:1.5}
+.figgrid figcaption b{display:block;color:#e8efed;font-weight:600;font-size:11px;letter-spacing:.16em;
+                      text-transform:uppercase;margin-bottom:6px}
+
+/* specs */
+.specs{display:grid;grid-template-columns:repeat(3,1fr);margin-top:64px;border-top:1px solid var(--dark-hair)}
+.spec{padding:28px 26px 26px 0;border-bottom:1px solid var(--dark-hair)}
+.spec .k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dark-mute);margin-bottom:8px}
+.spec .v{font-size:20px;font-weight:600;letter-spacing:-.02em;color:#f4f6f5}
+.spec .s{margin-top:6px;font-size:13.5px;color:var(--dark-mute);line-height:1.5}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:1.25fr 1fr;gap:70px;margin-top:62px;align-items:start}
+.bignum{font-size:clamp(44px,6.4vw,86px);font-weight:600;letter-spacing:-.04em;line-height:1;
+        background:linear-gradient(92deg,#eafff9 20%,#4fd8bf 85%);-webkit-background-clip:text;
+        background-clip:text;color:transparent}
+.bigsub{margin-top:12px;font-size:18px;color:var(--dark-mute)}
+.bigsub b{color:#e8efed;font-weight:560}
+.subrow{display:flex;margin-top:52px;border-top:1px solid var(--dark-hair)}
+.subrow .cell{flex:1;padding:24px 8px 0;border-right:1px solid var(--dark-hair)}
+.subrow .cell:last-child{border-right:none}
+.subrow .n{font-size:21px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.subrow .k{margin-top:5px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dark-mute)}
+.sl label{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dark-mute);margin-bottom:4px}
+.sl output{display:block;font-size:20px;font-weight:600;letter-spacing:-.015em;margin-bottom:14px;
+           font-variant-numeric:tabular-nums;color:#f4f6f5}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;border-radius:1px;
+                  background:rgba(255,255,255,.16);outline:none;margin-bottom:30px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+                  background:#fff;cursor:pointer}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border:none;border-radius:50%;background:#fff;cursor:pointer}
+.prov{margin-top:56px;font-size:13.5px;color:var(--dark-mute);max-width:700px;line-height:1.65}
+.prov b{color:#cfd9d6;font-weight:560}
+.livechip{display:inline-flex;align-items:center;gap:8px;margin-bottom:26px;font-size:12px;letter-spacing:.1em;
+          text-transform:uppercase;color:var(--dark-mute)}
+.livechip i{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+
+/* portfolio */
+.folio{margin-top:70px;border-top:1px solid var(--hair)}
+.frow{display:grid;grid-template-columns:1fr 110px 74px 1.5fr;gap:24px;align-items:baseline;
+      padding:22px 0;border-bottom:1px solid var(--hair)}
+.frow.hd{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:14px 0}
+.frow .nm{font-weight:560}
+.frow .no{color:var(--mute);font-size:14.5px;font-variant-numeric:tabular-nums}
+.frow .st{color:var(--mute);font-size:14.5px}
+.frow.this .nm{color:var(--teal-deep)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:76px;border-top:1px solid var(--hair)}
+.step{padding:36px 30px 0 0;border-right:1px solid var(--hair)}
+.step:last-child{border-right:none}
+.step .n{font-size:13px;color:var(--faint);font-variant-numeric:tabular-nums}
+.step h3{margin-top:12px;font-size:17.5px;font-weight:600;letter-spacing:-.015em}
+.step p{margin-top:10px;font-size:14.5px;color:var(--mute)}
+
+/* close */
+.close{background:radial-gradient(1000px 520px at 20% -20%,rgba(15,168,143,.13),transparent 62%),var(--dark);padding:118px 0}
+.close h2{font-size:clamp(32px,4.4vw,58px)}
+.close .when{margin-top:26px;font-size:17px;color:var(--dark-mute);max-width:640px}
+.close .when b{color:#f4f6f5;font-weight:560}
+.cta{display:inline-block;margin-top:42px;padding:16px 34px;border-radius:999px;background:var(--teal);
+     color:#04211c;font-weight:640;font-size:15px;text-decoration:none}
+
+footer{background:var(--dark);color:var(--dark-mute);font-size:12px;padding:0 0 58px}
+footer .wrap{border-top:1px solid var(--dark-hair);padding-top:30px}
+footer p{max-width:880px;line-height:1.7}
+
+@media(max-width:900px){
+  .wrap{padding:0 24px} section{padding:72px 0}
+  .band{grid-template-columns:repeat(2,1fr)}
+  .band .cell{border-bottom:1px solid var(--dark-hair)}
+  .rowitem{grid-template-columns:1fr;gap:10px}
+  .specs,.figgrid,.calc{grid-template-columns:1fr;gap:34px}
+  .spec{padding-right:0}
+  .steps{grid-template-columns:1fr}
+  .step{border-right:none;border-bottom:1px solid var(--hair);padding:30px 0}
+  .frow{grid-template-columns:1fr 80px;gap:12px}
+  .frow .st{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gatecard">
+    <div class="gm">Metis Energy × Aptics</div>
+    <h3>Gunsynd Solar Farm. A working proposal.</h3>
+    <p>Enter your work email — your access code fills in automatically.</p>
+    <label for="g-email">Work email</label>
+    <input id="g-email" type="email" autocomplete="email" placeholder="name@metisenergy.com">
+    <label for="g-key">Access key</label>
+    <input id="g-key" type="text" placeholder="GUSF-••••" autocapitalize="characters">
+    <button id="g-go">Open the proposal</button>
+    <div class="gatemsg" id="g-msg"></div>
+  </div>
+</div>
+
+<div id="page" class="hidden">
+
+<div id="nav"><div class="wrap"><b>Metis × Aptics · Gunsynd</b><a href="#close">Talk to us</a></div></div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="mark">Metis Energy × Aptics &nbsp;·&nbsp; Gunsynd Solar Farm · September 2026</div>
+    <h1>Care & custody<span class="turn">is changing hands.</span></h1>
+    <p class="sub">Construction and commissioning at Gunsynd are done, and Metis has guided commercial operations
+       for on or before 30 June 2026. Whatever an independent thermal and visual scan finds right now is a
+       defect for PCL Solar to fix — not a cost Metis has to carry. That's only true for as long as the defects
+       liability period stays open.</p>
+  </div>
+  <div class="band">
+    <div class="cell"><div class="v"><span data-count="94" data-suffix=" MW">0</span></div><div class="lbl">Gunsynd · AC maximum</div></div>
+    <div class="cell"><div class="v"><span data-count="122.78">0</span></div><div class="lbl">MW registered capacity</div></div>
+    <div class="cell"><div class="v"><span data-count="350" data-suffix=" km">0</span></div><div class="lbl">To Brisbane · mobilisation distance</div></div>
+    <div class="cell"><div class="v"><span data-count="2">0</span></div><div class="lbl">Jobs done on a single pass</div></div>
+    <div class="cell"><div class="v"><span data-count="570" data-suffix=" MW">0</span></div><div class="lbl">Bendemeer, behind it</div></div>
+  </div>
+</header>
+
+<!-- 00 THE WINDOW -->
+<section class="dark">
+  <div class="wrap rv">
+    <div class="eyebrow">Where Gunsynd sits today</div>
+    <h2>Construction is done. The liability clock has started.<span class="q">This is the moment to use it.</span></h2>
+    <p class="lede">Financial close and the EPC Notice to Proceed to <b style="color:#f4f6f5">PCL Solar</b> were
+       18 March 2024. Construction finished in November 2025, Gunsynd was entered into AEMO's market systems on
+       18 November 2025, and Metis has told shareholders commissioning is complete, with commercial operations
+       guided for on or before 30 June 2026 — a date now behind us, with dispatch into the grid already observed.
+       On the standard project sequence — Practical Completion, where care and custody transfers, then the
+       Commercial Operation Date, then a defects liability period that typically runs 12–24 months — Gunsynd
+       reads as at, or only weeks or months past, that handover.</p>
+
+    <div class="rows">
+      <div class="rowitem"><div class="no">01</div>
+        <div><h3>Before handover</h3></div>
+        <p>Any defect a thermal and visual scan finds before care and custody transfers is <b>PCL Solar's to
+           fix</b>, not Metis's — it's still their site.</p></div>
+
+      <div class="rowitem"><div class="no">02</div>
+        <div><h3>Inside the defects liability period</h3></div>
+        <p>Once care and custody has transferred, the same class of fault is <b>still the EPC's cost</b> — but
+           only until the defects liability period closes, typically 12–24 months after Practical Completion.
+           That clock is either already running at Gunsynd or is about to start.</p></div>
+
+      <div class="rowitem"><div class="no">03</div>
+        <div><h3>After it closes</h3></div>
+        <p>The identical hot joint or bad MC4 connector becomes <b>Metis's cost</b> to remediate — and a module
+           manufacturer product or performance claim needs thermal or EL evidence to substantiate it with the
+           OEM in the first place.</p></div>
+    </div>
+
+    <p class="pull">We could not confirm a certified Practical Completion or Commercial Operation Date from
+       public sources — <em>this is built from Metis's own shareholder disclosures and AEMO's registration
+       record</em>, not a site visit. If Practical Completion is still ahead, this is the pre-handover baseline.
+       If it has just passed, this is the first — and easiest — defect claim to raise against PCL Solar.</p>
+  </div>
+</section>
+
+<!-- 01 WHERE THIS STARTS -->
+<section class="dark">
+  <div class="wrap rv">
+    <div class="eyebrow">How it happens</div>
+    <h2>One machine cuts the grass and reads every string.<span class="q">On the same traverse.</span></h2>
+
+    <div class="rows">
+      <div class="rowitem"><div class="no">01</div>
+        <div><h3>The inspection is free</h3></div>
+        <p>The machine has to travel every row to cut it. Fitting thermal and visual sensing to that same
+           traverse costs nothing extra in time or mobilisation — so you get a <b>full string-level scan on
+           every pass</b> instead of once a year from a drone that cannot see under the panel.</p></div>
+
+      <div class="rowitem"><div class="no">02</div>
+        <div><h3>Mobilisation is the cost, not detection</h3></div>
+        <p>Goondiwindi is roughly 350 km from Brisbane. Every separately scoped visit is a vehicle, a crew and
+           a day. <b>Collapsing two scopes into one deployment is where the money is</b> — long before anyone
+           argues about recovered megawatt-hours.</p></div>
+
+      <div class="rowitem"><div class="no">03</div>
+        <div><h3>Continuous beats periodic</h3></div>
+        <p>Scheduled mowing lets grass climb to its maximum between visits, then cuts it back. A machine that
+           runs continuously holds it at your specified height permanently — <b>a flat vegetation profile
+           instead of a sawtooth</b>, on a site inside Queensland's mapped bushfire prone area.</p></div>
+    </div>
+
+    <p class="pull">The cost we take out is the mowing. The value we add is <em>knowing the condition of every
+       string, every pass, all year</em> — and being able to show exactly when the grass was last cut, and how
+       low.</p>
+  </div>
+</section>
+
+<!-- 02 THE MACHINE -->
+<section>
+  <div class="wrap rv">
+    <div class="eyebrow">The machine</div>
+    <h2>One chassis. It mows, and it sees.</h2>
+    <p class="lede">Every mowing pass is also a thermal and visual inspection of everything below the panel —
+       the layer no drone or drive-by ever sees. These frames are from our own under-panel camera work.</p>
+  </div>
+</section>
+
+<section class="dark" style="padding-top:0">
+  <div class="wrap rv">
+    <div class="figgrid">
+      <figure>
+        <img src="assets/thermal-01.png" alt="Thermal image of cable terminations running hot, flagged with detection boxes">
+        <figcaption><b>Radiometric thermal · terminations</b>Cable terminations running hot, boxed
+          automatically on a routine pass. Logged against the string — before it becomes an outage.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/thermal-02.png" alt="Close thermal view of two hot terminations with detection boxes">
+        <figcaption><b>Radiometric thermal · close pass</b>The same class of fault up close. Tracked between
+          passes, so a warm joint that is getting warmer never goes unnoticed.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/mc4-01.png" alt="Under-panel view showing two MC4 connectors identified and highlighted">
+        <figcaption><b>Visual · MC4 connectors</b>Two connectors identified from below by the on-board
+          model — a view drones and walk-downs never get.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/mc4-04.png" alt="Under-panel view with a single MC4 connector identified mid-row">
+        <figcaption><b>Visual · mid-row</b>A single connector picked out mid-row. Left alone, this is how
+          strings quietly stop earning.</figcaption>
+      </figure>
+    </div>
+
+    <div class="specs">
+      <div class="spec"><div class="k">Footprint</div><div class="v">1,320 × 920 × 450 mm</div>
+        <div class="s">Runs the full row, under the leading edge</div></div>
+      <div class="spec"><div class="k">Weight</div><div class="v">~80 kg</div>
+        <div class="s">Works wet ground a tractor can't touch</div></div>
+      <div class="spec"><div class="k">Cutting deck</div><div class="v">700 mm · 3 blades</div>
+        <div class="s">Cut height set to your spec — held continuously</div></div>
+      <div class="spec"><div class="k">Power</div><div class="v">48 V · ~860 W average</div>
+        <div class="s">About 4.2 kWh over a working day</div></div>
+      <div class="spec"><div class="k">Charging</div><div class="v">230 V · 32 A single-phase</div>
+        <div class="s">Standard LT supply. We supply the dock; it docks itself.</div></div>
+      <div class="spec"><div class="k">Sensing</div><div class="v">LiDAR · RTK · thermal + visual</div>
+        <div class="s">Centimetre positioning, geofenced off your cable routes</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 THE NUMBERS -->
+<section class="dark" style="padding-top:0">
+  <div class="wrap rv">
+    <div class="eyebrow">The yield case</div>
+    <h2>More yield from the same ground. Fewer crew days on it.</h2>
+    <p class="lede">Plant studies put vegetation-related PR recovery at 0.5–2% a year. A unit that cuts and
+       scans its block every month collects that recovery all year round. <b style="color:#f4f6f5;font-weight:560">Every
+       input below is yours to set.</b> Put in your own numbers:</p>
+
+    <div class="livechip" id="livetag"><i></i>Generation basis: OpenElectricity · Gunsynd (GUSF1)</div>
+
+    <div class="calc">
+      <div>
+        <div class="bignum" id="rAUD">A$0.00M</div>
+        <div class="bigsub">recovered per year · <b>across the coverage you set</b></div>
+        <div class="subrow">
+          <div class="cell"><div class="n" id="rGWh">0 GWh</div><div class="k">Energy recovered / yr</div></div>
+          <div class="cell"><div class="n" id="rMW">≈ 0 MW</div><div class="k">Capacity added, free</div></div>
+          <div class="cell"><div class="n" id="rUnits">0</div><div class="k">Units at 20 MW each</div></div>
+          <div class="cell"><div class="n" id="rPerMW">A$0</div><div class="k">Recovered per MW, per yr</div></div>
+        </div>
+      </div>
+      <div class="sl">
+        <label for="sMW">Coverage</label><output id="oMW">94 MW</output>
+        <input id="sMW" type="range" min="0" max="664" step="2" value="94">
+        <label for="sCUF">Capacity factor</label><output id="oCUF">26%</output>
+        <input id="sCUF" type="range" min="10" max="40" step="0.5" value="26">
+        <label for="sPrice">Price</label><output id="oPrice">A$100 / MWh</output>
+        <input id="sPrice" type="range" min="20" max="200" step="5" value="100">
+        <label for="sPR">PR recovered</label><output id="oPR">1%</output>
+        <input id="sPR" type="range" min="0" max="3" step="0.05" value="1">
+      </div>
+    </div>
+
+    <p class="prov">Coverage defaults to <b>94 MW</b> — Gunsynd's registered AC maximum — and fleet size to one
+       unit per 20 MW. Gunsynd carries its own settled NEM history under <b>GUSF1</b>, with dispatch observed as
+       recently as 5 August 2026. That data sits with you, not us, so the capacity factor and price sliders are
+       starting points rather than Aptics estimates — set them to your own figures and the arithmetic becomes
+       yours. Slide coverage to <b>664 MW</b> to include Bendemeer's solar and wind behind it.</p>
+  </div>
+</section>
+
+<!-- 04 THE OBLIGATION -->
+<section>
+  <div class="wrap rv">
+    <div class="eyebrow">The obligation</div>
+    <h2>In Queensland, vegetation management is written into the code.</h2>
+    <p class="lede">The <b>Construction and operation of solar farms Code of Practice 2024</b> commenced
+       5 April 2024, approved under the Work Health and Safety Act 2011 and the Electrical Safety Act 2002.
+       It requires site documentation to set out “actions to manage livestock, pest and vegetation management”
+       and how to manage damage that may cause safety issues.</p>
+
+    <p class="pull">It sets no grass height, no break width and no cutting interval. The standard at Gunsynd is
+       the one you set — and <em>the only way to stand behind it is to show what was actually done, where, and
+       when</em>. Every pass leaves that record automatically.</p>
+  </div>
+</section>
+
+<!-- 05 THE PORTFOLIO -->
+<section>
+  <div class="wrap rv" style="padding-top:0">
+    <div class="eyebrow">The portfolio</div>
+    <h2>One operating asset. A 570 MW hub behind it.</h2>
+    <p class="lede">Everything configured at Gunsynd — geofences, thermal baselines, cut height, reporting —
+       becomes the operating standard for Bendemeer when it energises.</p>
+
+    <div class="folio">
+      <div class="frow hd"><div>Site</div><div>MW</div><div>State</div><div></div></div>
+      <div class="frow this"><div class="nm">Gunsynd</div><div class="no">94 AC</div><div class="st">QLD</div>
+        <div class="st">This proposal · operating, dispatch seen 5 Aug 2026</div></div>
+      <div class="frow"><div class="nm">Bendemeer — solar</div><div class="no">210</div><div class="st">NSW</div>
+        <div class="st">New England REZ · in development</div></div>
+      <div class="frow"><div class="nm">Bendemeer — wind</div><div class="no">360</div><div class="st">NSW</div>
+        <div class="st">Same hub · firebreaks and access tracks are the same problem</div></div>
+      <div class="frow"><div class="nm">Bendemeer — storage</div><div class="no">200</div><div class="st">NSW</div>
+        <div class="st">2-hour battery · the asset with the tightest vegetation setback of all</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 THE PATH -->
+<section style="background:var(--white)">
+  <div class="wrap rv">
+    <div class="eyebrow">The path</div>
+    <h2>A nominated block. Then the standard travels.</h2>
+
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Nominated block trial</h3>
+        <p>A block your site team nominates, scoped and priced with them. We would rather be paid against
+           delivered results than sell you hardware, and we are comfortable pegging to performance metrics
+           you set.</p></div>
+      <div class="step"><div class="n">02</div><h3>What you get</h3>
+        <p>The block held at your specified height, a thermal and visual scan of every string, and
+           commissioning and completion reports — a like-for-like baseline against what the site costs to
+           maintain today.</p></div>
+      <div class="step"><div class="n">03</div><h3>The whole site</h3>
+        <p>Full 3D model, autonomous inspection, signage and safety training across Gunsynd, with the
+           vegetation record mapped to what your site documentation commits to under the Code.</p></div>
+      <div class="step"><div class="n">04</div><h3>Bendemeer</h3>
+        <p>The same standard is ready before the hub energises — solar, wind firebreaks and the battery
+           setback designed around a machine that is already proven on your own ground.</p></div>
+    </div>
+
+    <p class="pull">Two numbers would let us size this properly, and neither is urgent:
+       <em>minimum clearance under panel at maximum tilt</em>, which sets the chassis envelope; and the
+       <em>retained vegetation height you work to</em>, which sets pass frequency and therefore fleet size.</p>
+  </div>
+</section>
+
+<!-- CLOSE -->
+<section class="close" id="close">
+  <div class="wrap rv">
+    <h2>Let's talk before we put anything on the grass.</h2>
+    <p class="when">Rufayl — half an hour is enough to work out whether an independent thermal and visual
+       baseline is worth running at Gunsynd before the defects liability window narrows any further, and
+       whether the same pass makes sense against the vegetation obligation while we're there.
+       <b>Phillip Wagstaff, Aptics.</b></p>
+    <a class="cta" href="mailto:phillip@aptics.com?subject=Gunsynd%20Solar%20Farm%20%E2%80%94%20thermal%20baseline">Email Phillip directly</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Figures are AUD and indicative, for discussion. Generation basis from OpenElectricity (Gunsynd GUSF1, NEM
+       region QLD1, AC maximum 94 MW, dispatch observed 5 August 2026). The 122.78 MW registered-capacity figure
+       is carried over from Aptics' earlier build of this page and was <b>not</b> re-confirmed against
+       OpenElectricity's facility API in this session (it required an auth token this environment did not have)
+       — public press and project sources instead state 111 MWdc nameplate; check both directly on
+       OpenElectricity before this goes out. PR-recovery ranges from published plant performance studies;
+       capacity factor and price are user-set inputs and are not Aptics estimates. Bendemeer capacities from
+       Metis Energy's published project description. Lifecycle facts: financial close and EPC Notice to Proceed
+       to PCL Solar, 18 March 2024 (Metis Energy SGX announcement); construction completed and AEMO registration
+       granted, 18 November 2025 (PV Tech); commissioning substantially complete and commercial operations
+       guided for on or before 30 June 2026 (Metis Energy shareholder Q&amp;A, May 2026) — no independent
+       confirmation of a certified Practical Completion or Commercial Operation Date was found in public
+       sources. Regulatory reference: Construction and operation of solar farms Code of Practice 2024 (PN12493),
+       Queensland, commenced 5 April 2024. Distance to Brisbane is a straight-line approximation. Imagery is
+       from Aptics deployments elsewhere and is illustrative; we have not visited Gunsynd, and nothing on this
+       page is a claim about its current physical or electrical condition. Figures on this page are for
+       discussion and are not an offer. Aptics Pte. Ltd. · Confidential &amp; without prejudice.</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+
+  /* ---------- access gate — key auto-fills from ?key= ---------- */
+  var SALT="e9930bdf1b7f75c4";
+  var KEYHASH="1f6f452e536ec5d150f6bb1a5979d63d82bdcf0beebeb34d927d6b73717e6228";
+  var DOMAINS=["metisenergy.com","aptics.com"];
+  var KEY_B64="R1VTRi0wOTI2";
+
+  function sha256(str){
+    return crypto.subtle.digest("SHA-256",new TextEncoder().encode(str)).then(function(buf){
+      return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0");}).join("");
+    });
+  }
+  function unlock(){
+    $("gate").classList.add("hidden");
+    $("page").classList.remove("hidden");
+    sessionStorage.setItem("aptics_gusf_unlocked","1");
+    boot();
+  }
+  function tryKey(key,silent){
+    return sha256(SALT+"|"+String(key||"").trim().toUpperCase()).then(function(h){
+      if(h===KEYHASH){unlock();return true;}
+      if(!silent){$("g-msg").textContent="That key doesn't match. Check your invitation link.";}
+      return false;
+    });
+  }
+  function autofill(){
+    var email=($("g-email").value||"").trim().toLowerCase();
+    var dom=email.split("@")[1];
+    if(dom&&DOMAINS.indexOf(dom)>=0){
+      $("g-key").value=atob(KEY_B64);
+      var m=$("g-msg"); m.style.color="#8b9793";
+      m.textContent="Access code filled from your invitation.";
+    }
+  }
+  var urlKey=new URLSearchParams(location.search).get("key");
+  if(urlKey){ $("g-key").value=urlKey.toUpperCase(); }
+  if(sessionStorage.getItem("aptics_gusf_unlocked")==="1"){ unlock(); }
+  else if(urlKey){ tryKey(urlKey,true); }
+  ["input","change","blur"].forEach(function(ev){$("g-email").addEventListener(ev,autofill);});
+  $("g-go").addEventListener("click",function(){tryKey($("g-key").value,false);});
+  $("g-key").addEventListener("keydown",function(e){if(e.key==="Enter")tryKey($("g-key").value,false);});
+
+  /* ---------- page ---------- */
+  var booted=false;
+  function boot(){
+    if(booted)return; booted=true;
+    var fmt=function(n,d){d=d||0;return n.toLocaleString("en-AU",{minimumFractionDigits:d,maximumFractionDigits:d});};
+
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.14});
+    document.querySelectorAll(".rv").forEach(function(el){io.observe(el);});
+
+    var nav=$("nav");
+    addEventListener("scroll",function(){nav.classList.toggle("on",scrollY>innerHeight*.6);},{passive:true});
+
+    var co=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting)return; co.unobserve(e.target);
+      var el=e.target,end=+el.dataset.count,suf=el.dataset.suffix||"",dec=(end%1!==0)?2:0,t0=performance.now();
+      (function tick(t){
+        var p=Math.min((t-t0)/1400,1),ease=1-Math.pow(1-p,3);
+        el.textContent=fmt(end*ease,dec)+suf;
+        if(p<1)requestAnimationFrame(tick);
+      })(t0);
+    });},{threshold:.5});
+    document.querySelectorAll("[data-count]").forEach(function(el){co.observe(el);});
+
+    /* ----- yield engine ----- */
+    var cur={aud:0,gwh:0,mw:0,units:0,perMW:0};
+    function target(){
+      var mw=+$("sMW").value,cuf=+$("sCUF").value/100,price=+$("sPrice").value,pr=+$("sPR").value/100;
+      $("oMW").textContent=fmt(mw)+" MW";
+      $("oCUF").textContent=(cuf*100).toFixed(1).replace(/\.0$/,"")+"%";
+      $("oPrice").textContent="A$"+fmt(price)+" / MWh";
+      $("oPR").textContent=(pr*100).toFixed(2).replace(/\.?0+$/,"")+"%";
+      var gwh=mw*8760*cuf*pr/1000;
+      var aud=gwh*1000*price/1e6;
+      var eqmw=cuf>0?gwh*1000/(8760*cuf):0;
+      return{aud:aud,gwh:gwh,mw:eqmw,units:Math.ceil(mw/20),perMW:mw>0?aud*1e6/mw:0};
+    }
+    function render(v){
+      $("rAUD").textContent=v.aud>=10?"A$"+fmt(v.aud,1)+"M":"A$"+fmt(v.aud,2)+"M";
+      $("rGWh").textContent=fmt(v.gwh,1)+" GWh";
+      $("rMW").textContent="≈ "+fmt(v.mw,0)+" MW";
+      $("rUnits").textContent=fmt(Math.round(v.units),0);
+      $("rPerMW").textContent="A$"+fmt(Math.round(v.perMW),0);
+    }
+    var anim=null;
+    function tween(){
+      var to=target(),from={},k; for(k in cur)from[k]=cur[k];
+      var t0=performance.now();
+      if(anim)cancelAnimationFrame(anim);
+      (function step(t){
+        var p=Math.min((t-t0)/420,1),e=1-Math.pow(1-p,3),v={};
+        for(var k in to)v[k]=from[k]+(to[k]-from[k])*e;
+        render(v);cur=v;
+        if(p<1)anim=requestAnimationFrame(step);
+      })(t0);
+    }
+    ["sMW","sCUF","sPrice","sPR"].forEach(function(id){$(id).addEventListener("input",tween);});
+    render(cur=target());
+
+    /* ----- OpenElectricity live attempt (graceful fallback) ----- */
+    fetch("https://data.openelectricity.org.au/v3/stats/au/NEM/GUSF/power/7d.json")
+      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(j){
+        var s=(j.data||[]).filter(function(d){return d.data_type==="power";})[0];
+        if(!s||!s.history)throw 0;
+        var arr=s.history.data.filter(function(v){return v!=null;});
+        if(!arr.length)throw 0;
+        var avg=arr.reduce(function(a,b){return a+b;},0)/arr.length;
+        $("livetag").innerHTML='<i></i>Live · Gunsynd averaged '+fmt(avg,0)+' MW over the last 7 days · OpenElectricity';
+      })
+      .catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>
